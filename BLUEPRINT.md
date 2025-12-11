@@ -46,6 +46,7 @@ haj impl (project) model -d/--dependencies (dependencies to be installed) # open
 
 ```bash
 haj train (project) # train's models dependent on prediction type
+haj train (project) -m/--model {}# train's models dependent on prediction type
 ```
 
 ```bash
@@ -247,3 +248,14 @@ def crown_champion(project_id: str, metric: str = "rmse"):
 
 def containerize_project(project_id: str):
 ```
+
+
+### Sequence of Development
+
+1. Construct CLI Tool schema
+2. Implement retrieve, processing, and model templates
+3. Construct schema of command functions
+4. Implement util functions
+5. Impelement server functionality
+6. Impelement deployment functionality
+7. Write tests
