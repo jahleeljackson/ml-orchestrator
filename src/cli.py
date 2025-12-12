@@ -1,7 +1,7 @@
 import click
 from loguru import logger 
 
-from util.functions import list_projects, delete_project, init_project
+from util.functions import list_projects, delete_project, init_project, config_project, implement
 
 models_list = ['lr', 'rfc', 'xgb', 'svc', 'svr', 'knn', 'nn', 'all']
 metrics_list = ['rmse', 'mae', 'mse', 'acc', 'f1', 'recall', 'precision', ]
@@ -37,38 +37,28 @@ def init(project_id: str):
     logger.info(f"Initializing {project_id}...")
     logger.info(f"Prediction type defaulted to classification.\nUse config command to update prediction type")
 
-    init_project(project_id)
-
-    # handle logic here
-
-    logger.info(f"{project_id} successfully initialized...")
+    if init_project(project_id):
+        logger.info(f"{project_id} successfully initialized...")
 
 
 @cli.command()
 @click.argument("project_id")
 @click.option("--dependencies", "-d", multiple=True, help="Add any number of dependencies to project.")
-@click.option("--prediction", "-p", type=click.Choice(['regression', 'classification']), help="Update prediction type to project.")
+@click.option("--prediction", "-p", type=click.Choice(['regression', 'classification']), help="Update prediction type for project.")
 @click.option("--title", "-t", help="Update project's title.")
-def config(project_id: str, dependencies: tuple, prediction: str, title: str):
+def config(project_id: str, dependencies: tuple = None, prediction: str = None, title: str = None):
     """Set configurations for specified project."""
-
-
-    if dependencies:
-        print(dependencies)
-
-
-    if title:
-        print(title)
 
     # Handling cases
     if not dependencies and not prediction and not title:
         raise click.UsageError("At least one option must be passed to config command!")
 
+    
     logger.info(f"Configuring {project_id}...")
 
-    # handle logic
+    if config_project(project_id, dependencies, prediction, title):
 
-    logger.info("Configurations saved!")
+        logger.info("Configurations saved!")
 
 
 
@@ -77,21 +67,14 @@ def config(project_id: str, dependencies: tuple, prediction: str, title: str):
 @click.argument("project_id")
 @click.option("--dependencies", "-d", multiple=True, help="Add any number of dependencies to project.")
 def impl(project_id: str, component: str, dependencies: tuple):
-    """Implement specified project component."""
+    """Implement specified project component (via vim editor)."""
     
-
-    if component == "retriever":
-        print("retriever accessed")
+    implement(project_id, component, dependencies)
 
 
-    if component == "processor":
-        print("processor accessed")
 
-    if component == "model":
-        print("model accessed")
 
-    if dependencies:
-        print(dependencies)
+
 
 @cli.command()
 @click.argument("project_id")

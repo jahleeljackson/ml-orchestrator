@@ -252,10 +252,20 @@ def containerize_project(project_id: str):
 
 ### Sequence of Development
 
-1. Construct CLI Tool schema
+1. Construct CLI Tool schema ✅
 2. Implement retrieve, processing, and model templates
+    - How will I implement logging, tracking, and versioning?
+    - How do I control dependencies for individual projects?
 3. Construct schema of command functions
 4. Implement util functions
-5. Impelement server functionality
-6. Impelement deployment functionality
+5. Implement server functionality
+6. Implement deployment functionality
 7. Write tests
+
+### TODOs
+
+1. logging and tracking functionality (MLFlow?) to train.py functions
+2. data versionining to retriever.py and processor.py
+2. data retrieval from a file function _get_data() -> np.ndarray to train.py
+3. metrics for mae and mse to regression models
+3. metrics for precision, recall to regression models
