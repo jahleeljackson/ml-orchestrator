@@ -1,24 +1,21 @@
 from typing import Optional, Tuple, Dict, Any
 import numpy as np
+import argparse 
 
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import SVR
-from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 from sklearn.model_selection import train_test_split
 from xgboost import XGBRegressor
 
 
-# TODO: Add logging and tracking functionality (MLFlow?)
-# TODO: Add data retrieval from a file function _get_data() -> np.ndarray
-
-
-# TODO: Add metrics for mae and mse
 def _evaluate_regression(model, X_val, y_val) -> Dict[str, float]:
     preds = model.predict(X_val)
     return {
-        "rmse": float(mean_squared_error(y_val, preds, squared=False)),
-        "r2": float(r2_score(y_val, preds))
+        "mse": float(mean_squared_error(y_val, preds, squared=False)),
+        "r2": float(r2_score(y_val, preds)),
+        "mae": float(mean_absolute_error(y_val, preds)),
     }
 
 

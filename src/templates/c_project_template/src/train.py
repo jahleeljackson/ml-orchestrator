@@ -1,19 +1,16 @@
 from typing import Optional, Tuple, Dict, Any
 import numpy as np
+import argparse 
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score, f1_score
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 from sklearn.model_selection import train_test_split
 from xgboost import XGBClassifier
 
 
-# TODO: Add logging and tracking functionality (MLFlow?)
-# TODO: Add data retrieval from a file function _get_data() -> np.ndarray
-
-# TODO: Add metrics for precision, recall
 def _evaluate_classifier(model, X_val, y_val) -> Dict[str, float]:
     preds = model.predict(X_val)
     return {
@@ -27,12 +24,10 @@ def logistic_regression(
     y_train: np.ndarray,
     X_val: Optional[np.ndarray] = None,
     y_val: Optional[np.ndarray] = None,
-    penalty: str = "l2",
     C: float = 1.0,
     max_iter: int = 1000
 ) -> Tuple[Any, Dict[str, float]]:
     model = LogisticRegression(
-        penalty=penalty,
         C=C,
         max_iter=max_iter
     )
